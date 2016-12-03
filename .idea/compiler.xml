@@ -26,5 +26,8 @@
         <module name="spark_hive_source_destination" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="spark_hive_source_destination" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

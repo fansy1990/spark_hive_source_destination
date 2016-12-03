@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<PMML version="4.2" xmlns="http://www.dmg.org/PMML-4_2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Header copyright="(C) Copyright IBM Corp. 1994, 2015">
+    <Application name="IBM SPSS Modeler" version="18"/>
+</Header>
+  <DataDictionary numberOfFields="5">
+    <DataField dataType="double" name="Na_to_K" optype="continuous">
+      <Extension extender="spss" name="storageType" value="numeric"/>
+</DataField>
+    <DataField dataType="string" name="BP" optype="categorical">
+      <Extension extender="spss" name="storageType" value="string"/>
+      <Value property="valid" value="HIGH"/>
+      <Value property="valid" value="LOW"/>
+      <Value property="valid" value="NORMAL"/>
+</DataField>
+    <DataField dataType="integer" name="Age" optype="continuous">
+      <Extension extender="spss" name="storageType" value="numeric"/>
+</DataField>
+    <DataField dataType="string" name="Cholesterol" optype="categorical">
+      <Extension extender="spss" name="storageType" value="string"/>
+      <Extension extender="spss" name="flagTypeTrueValue" value="NORMAL"/>
+      <Value property="valid" value="HIGH"/>
+      <Value property="valid" value="NORMAL"/>
+</DataField>
+    <DataField dataType="string" name="Drug" optype="categorical">
+      <Extension extender="spss" name="storageType" value="string"/>
+      <Value property="valid" value="drugA"/>
+      <Value property="valid" value="drugB"/>
+      <Value property="valid" value="drugC"/>
+      <Value property="valid" value="drugX"/>
+      <Value property="valid" value="drugY"/>
+</DataField>
+</DataDictionary>
+  <TreeModel algorithmName="C5" functionName="classification" missingValueStrategy="weightedConfidence" modelName="Drug">
+    <Extension extender="spss" name="missingValueStrategy" value="weightedConfidence"/>
+    <MiningSchema>
+      <MiningField importance="0.492419" name="Na_to_K" usageType="active"/>
+      <MiningField importance="0.349987" name="BP" usageType="active"/>
+      <MiningField importance="0.0601521" name="Age" usageType="active"/>
+      <MiningField importance="0.0974417" name="Cholesterol" usageType="active"/>
+      <MiningField name="Drug" usageType="predicted"/>
+</MiningSchema>
+    <Node defaultChild="1" id="0" recordCount="200" score="drugY">
+      <Extension extender="spss" name="defaultChild" value="0"/>
+      <True/>
+      <ScoreDistribution confidence="0.115" recordCount="23" value="drugA"/>
+      <ScoreDistribution confidence="0.08" recordCount="16" value="drugB"/>
+      <ScoreDistribution confidence="0.08" recordCount="16" value="drugC"/>
+      <ScoreDistribution confidence="0.27" recordCount="54" value="drugX"/>
+      <ScoreDistribution confidence="0.455" recordCount="91" value="drugY"/>
+      <Node defaultChild="2" id="1" recordCount="109" score="drugX">
+        <Extension extender="spss" name="defaultChild" value="0"/>
+        <SimplePredicate field="Na_to_K" operator="lessOrEqual" value="14.642"/>
+        <ScoreDistribution confidence="0.21100917431192662" recordCount="23" value="drugA"/>
+        <ScoreDistribution confidence="0.14678899082568808" recordCount="16" value="drugB"/>
+        <ScoreDistribution confidence="0.14678899082568808" recordCount="16" value="drugC"/>
+        <ScoreDistribution confidence="0.4954128440366973" recordCount="54" value="drugX"/>
+        <ScoreDistribution confidence="0.0" recordCount="0" value="drugY"/>
+        <Node defaultChild="3" id="2" recordCount="39" score="drugA">
+          <Extension extender="spss" name="defaultChild" value="0"/>
+          <SimplePredicate field="BP" operator="equal" value="HIGH"/>
+          <ScoreDistribution confidence="0.5897435897435898" recordCount="23" value="drugA"/>
+          <ScoreDistribution confidence="0.41025641025641024" recordCount="16" value="drugB"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugC"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugX"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugY"/>
+          <Node id="3" recordCount="23" score="drugA">
+            <SimplePredicate field="Age" operator="lessOrEqual" value="50"/>
+            <ScoreDistribution confidence="1.0" recordCount="23" value="drugA"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugB"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugC"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugX"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugY"/>
+</Node>
+          <Node id="4" recordCount="16" score="drugB">
+            <SimplePredicate field="Age" operator="greaterThan" value="50"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugA"/>
+            <ScoreDistribution confidence="1.0" recordCount="16" value="drugB"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugC"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugX"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugY"/>
+</Node>
+</Node>
+        <Node defaultChild="6" id="5" recordCount="34" score="drugX">
+          <Extension extender="spss" name="defaultChild" value="0"/>
+          <SimplePredicate field="BP" operator="equal" value="LOW"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugA"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugB"/>
+          <ScoreDistribution confidence="0.47058823529411764" recordCount="16" value="drugC"/>
+          <ScoreDistribution confidence="0.5294117647058824" recordCount="18" value="drugX"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugY"/>
+          <Node id="6" recordCount="18" score="drugX">
+            <SimplePredicate field="Cholesterol" operator="equal" value="NORMAL"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugA"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugB"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugC"/>
+            <ScoreDistribution confidence="1.0" recordCount="18" value="drugX"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugY"/>
+</Node>
+          <Node id="7" recordCount="16" score="drugC">
+            <SimplePredicate field="Cholesterol" operator="equal" value="HIGH"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugA"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugB"/>
+            <ScoreDistribution confidence="1.0" recordCount="16" value="drugC"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugX"/>
+            <ScoreDistribution confidence="0.0" recordCount="0" value="drugY"/>
+</Node>
+</Node>
+        <Node id="8" recordCount="36" score="drugX">
+          <SimplePredicate field="BP" operator="equal" value="NORMAL"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugA"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugB"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugC"/>
+          <ScoreDistribution confidence="1.0" recordCount="36" value="drugX"/>
+          <ScoreDistribution confidence="0.0" recordCount="0" value="drugY"/>
+</Node>
+</Node>
+      <Node id="9" recordCount="91" score="drugY">
+        <SimplePredicate field="Na_to_K" operator="greaterThan" value="14.642"/>
+        <ScoreDistribution confidence="0.0" recordCount="0" value="drugA"/>
+        <ScoreDistribution confidence="0.0" recordCount="0" value="drugB"/>
+        <ScoreDistribution confidence="0.0" recordCount="0" value="drugC"/>
+        <ScoreDistribution confidence="0.0" recordCount="0" value="drugX"/>
+        <ScoreDistribution confidence="1.0" recordCount="91" value="drugY"/>
+</Node>
+</Node>
+</TreeModel>
+</PMML>

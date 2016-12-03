@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.jpmml:pmml-evaluator:1.2.15">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../.m2/local_repo/org/jpmml/pmml-evaluator/1.2.15/pmml-evaluator-1.2.15.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../.m2/local_repo/org/jpmml/pmml-evaluator/1.2.15/pmml-evaluator-1.2.15-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../.m2/local_repo/org/jpmml/pmml-evaluator/1.2.15/pmml-evaluator-1.2.15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

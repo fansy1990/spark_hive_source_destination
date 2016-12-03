@@ -15,20 +15,8 @@
           <id>cloudera</id>
           <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
       </repository>
-    <repository>
-      <id>scala-tools.org</id>
-      <name>Scala-Tools Maven2 Repository</name>
-      <url>http://scala-tools.org/repo-releases</url>
-    </repository>
-  </repositories>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>scala-tools.org</id>
-      <name>Scala-Tools Maven2 Repository</name>
-      <url>http://scala-tools.org/repo-releases</url>
-    </pluginRepository>
-  </pluginRepositories>
+  </repositories>
 
   <dependencies>
       <!-- Spark  -->
@@ -37,6 +25,22 @@
           <artifactId>spark-core_2.10</artifactId>
           <version>${spark.version}</version>
       </dependency>
+      <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-mllib_2.10</artifactId>
+          <version>${spark.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.jpmml</groupId>
+                  <artifactId>pmml-model</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+      <dependency>
+          <groupId>org.jpmml</groupId>
+          <artifactId>pmml-evaluator</artifactId>
+          <version>1.2.15</version>
+      </dependency>
 
       <dependency>
           <groupId>org.apache.spark</groupId>
@@ -44,12 +48,6 @@
           <version>${spark.version}</version>
       </dependency>
 
-
-    <dependency>
-      <groupId>org.scala-lang</groupId>
-      <artifactId>scala-library</artifactId>
-      <version>${scala.version}</version>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -63,30 +61,117 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+    <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                    <args>
+                        <arg>-target:jvm-1.7</arg>
+                    </args>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <finalName>example-${project.version}</finalName>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>oro*</exclude>
+                                    <exclude>org.apache.*:*</exclude>
+                                    <exclude>junit:junit</exclude>
+                                    <exclude>org.sc*</exclude>
+                                    <exclude>org.sp*</exclude>
+                                    <exclude>org.sl*</exclude>
+                                    <exclude>org.r*</exclude>
+                                    <exclude>org.c*</exclude>
+                                    <exclude>org.t*</exclude>
+                                    <exclude>org.e*</exclude>
+                                    <exclude>org.u*</exclude>
+                                    <exclude>org.x*</exclude>
+                                    <exclude>org.js*</exclude>
+                                    <exclude>org.jo*</exclude>
+                                    <exclude>org.f*</exclude>
+                                    <exclude>org.m*</exclude>
+                                    <exclude>org.o*</exclude>
+                                    <exclude>*:xml-apis</exclude>
+                                    <exclude>log4j*</exclude>
+                                    <exclude>org.antlr*</exclude>
+                                    <exclude>org.datanucleus*</exclude>
 
-  <build>
-    <sourceDirectory>src/main/scala</sourceDirectory>
-    <testSourceDirectory>src/test/scala</testSourceDirectory>
-    <plugins>
-      <plugin>
-        <groupId>org.scala-tools</groupId>
-        <artifactId>maven-scala-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <scalaVersion>${scala.version}</scalaVersion>
-          <args>
-            <arg>-target:jvm-1.7</arg>
-          </args>
-        </configuration>
-      </plugin>
 
-    </plugins>
-  </build>
+                                    <exclude>net*</exclude>
+                                    <exclude>commons*</exclude>
+                                    <exclude>com.j*</exclude>
+                                    <exclude>com.x*</exclude>
+                                    <exclude>com.n*</exclude>
+                                    <exclude>com.i*</exclude>
+                                    <exclude>com.t*</exclude>
+                                    <exclude>com.c*</exclude>
+                                    <exclude>com.gi*</exclude>
+                                    <exclude>com.google.code*</exclude>
+                                    <exclude>com.google.p*</exclude>
+                                    <exclude>com.f*</exclude>
+                                   <exclude>com.su*</exclude>
+                                    <exclude>com.a*</exclude>
+                                    <exclude>com.e*</exclude>
+                                    <exclude>javax*</exclude>
+                                    <exclude>s*</exclude>
+                                    <exclude>i*</exclude>
+                                    <exclude>j*</exclude>
+                                    <exclude>a*</exclude>
+                                    <exclude>x*</exclude>
+                                </excludes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.google.common</pattern>
+                                    <shadedPattern>com.shaded.google.common</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.dmg.pmml</pattern>
+                                    <shadedPattern>org.shaded.dmg.pmml</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.jpmml.agent</pattern>
+                                    <shadedPattern>org.shaded.jpmml.agent</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.jpmml.model</pattern>
+                                    <shadedPattern>org.shaded.jpmml.model</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.jpmml.schema</pattern>
+                                    <shadedPattern>org.shaded.jpmml.schema</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
 </project>

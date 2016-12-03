@@ -1,0 +1,13 @@
+-- field_0,field_1,field_2
+-- 98,97,96
+create table svm (
+   field_0 double ,
+    field_1 double,
+    field_2 double
+)
+ROW FORMAT DELIMITED
+   FIELDS TERMINATED BY ','
+   STORED AS TEXTFILE;
+
+-- import data , get ride of first line
+load data  inpath 'svm.data' into table svm;

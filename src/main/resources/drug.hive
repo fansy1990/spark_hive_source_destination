@@ -1,0 +1,15 @@
+-- Age,Sex,BP,Cholesterol,Na_to_K
+-- 23,"F","HIGH","HIGH",25.354629
+create table drug (
+   age int ,
+    sex string ,
+    bp string,
+    cholesterol string,
+    na_to_k double
+)
+ROW FORMAT DELIMITED
+   FIELDS TERMINATED BY ','
+   STORED AS TEXTFILE;
+
+-- import data , get ride of first line
+load data  inpath 'drug.data' into table drug;
