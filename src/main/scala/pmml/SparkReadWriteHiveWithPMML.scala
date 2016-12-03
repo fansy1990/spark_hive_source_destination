@@ -10,7 +10,7 @@ import spark.{TransformerBuilder, EvaluatorUtil}
  * 分析结果写入Hive表中
  * Created by fanzhe on 2016/11/30.
  * 调用方式：
- *
+ *spark-submit --class pmml.SparkReadWriteHiveWithPMML --master yarn --deploy-mode cluster --jars /usr/lib/hive/lib/datanucleus-core-3.2.10.jar --files /usr/lib/hive/conf/hive-site.xml example-1.0-SNAPSHOT.jar svm tmp4 /tmp/svm.pmml
  */
 object SparkReadWriteHiveWithPMML {
 
